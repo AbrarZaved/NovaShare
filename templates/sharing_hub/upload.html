@@ -1,0 +1,38 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File - NovaShare</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/login/">Login</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Upload Your Files</h1>
+        <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="file">Choose File to Upload:</label>
+            <input type="file" id="file" name="file" required>
+
+            <label for="encryption">Encrypt File:</label>
+            <input type="checkbox" id="encryption" name="encryption" value="true">
+
+            <button type="submit">Upload File</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 NovaShare. All rights reserved.</p>
+    </footer>
+</body>
+</html>
