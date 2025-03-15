@@ -1,30 +1,13 @@
+{% extends "extras/main.html" %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaShare - Secure File Sharing</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/upload">Upload File</a></li>
-            </ul>
-        </nav>
-    </header>
+{% block content %}
+<main class="flex justify-center items-center min-h-screen text-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-xl">
+            <h1 class="text-4xl font-semibold text-gray-800 mb-6">Welcome to NovaShare</h1>
+            <p class="text-lg text-gray-600 mb-4">Your secure file sharing platform.</p>
+            <p class="text-lg text-gray-600 mb-6">Upload your files securely with encryption.</p>
+            <a href="/upload" class="inline-block bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">Start Uploading</a>
+        </div>
+</main>
+{% endblock content %}
 
-    <main>
-        <h1>Welcome to NovaShare</h1>
-        <p>Your secure file sharing platform.</p>
-        <p>Upload your files securely with encryption.</p>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 NovaShare. All rights reserved.</p>
-    </footer>
-</body>
-</html>
