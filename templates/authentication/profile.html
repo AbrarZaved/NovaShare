@@ -1,0 +1,24 @@
+{% extends "extras/main.html" %}
+{% load static %}
+    {% block content %}
+    <section class="max-w-7xl mx-auto p-8 mt-10 bg-white rounded-lg shadow-md">
+        <div class="flex items-center space-x-8">
+            <img src="{{ user.pro_pic.url }}" alt="Profile Picture" class="w-32 h-32 rounded-full border-2 border-blue-500">
+            <div>
+                <h2 class="text-3xl font-semibold">{{ user.get_full_name }}</h2>
+                <p class="text-gray-600">{{ user.email }}</p>
+                <p class="text-gray-500 mt-2">Member since: {{ user.date_joined|date:"F j, Y" }}</p>
+            </div>
+        </div>
+
+        <div class="mt-10">
+            <h3 class="text-xl font-medium">Account Settings</h3>
+            <ul class="mt-4 space-y-4">
+                <li><a href="/account/edit" class="text-blue-500 hover:underline">Edit Profile</a></li>
+                <li><a href="/change-password" class="text-blue-500 hover:underline">Change Password</a></li>
+                <li><a href="/delete-account" class="text-red-500 hover:underline">Delete Account</a></li>
+            </ul>
+        </div>
+    </section>
+    {% endblock content %}
+</html>

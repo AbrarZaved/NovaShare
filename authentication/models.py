@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser, User
 class User(AbstractUser):
     groups = None
     user_permissions = None
+    pro_pic = models.ImageField(upload_to='profile_pictures/', default='profile_pictures/default.jpg')
 
     def __str__(self):
         return self.username
