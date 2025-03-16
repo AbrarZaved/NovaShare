@@ -21,7 +21,7 @@
 
                 {% if user.is_authenticated %}
                 <li class="relative">
-                    <a href="#" class="hover:text-gray-300" id="userMenuToggle">{{ user.get_full_name }}</a>
+                    <a href="#" class="hover:text-gray-300" id="userMenuToggle">{% if not user.get_full_name %}{{user}}{% else %}{{ user.get_full_name }}{% endif %}</a>
                     <ul class="absolute hidden bg-white text-black mt-2 py-2 w-48 shadow-lg" id="userMenu">
                         <li><a href="{% url "profile" %}" class="block px-4 py-2 hover:bg-gray-200">My Account</a></li>
                         <li><a href="/logout" class="block px-4 py-2 hover:bg-gray-200">Logout</a></li>

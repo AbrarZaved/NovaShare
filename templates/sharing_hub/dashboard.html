@@ -1,5 +1,6 @@
 {% extends "extras/main.html" %}
 {% load static %}
+{% load custom_filters %}
 {% block content %}
     <main class="flex justify-center items-center min-h-screen px-4">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl">
@@ -7,10 +8,13 @@
 
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Your Uploaded Files:</h2>
             <ul class="space-y-4">
-                {% for file in uploaded_files %}
+                {% for file in uploads %}
                     <li class="flex justify-between items-center border-b py-2">
-                        <span class="text-gray-700">{{ file.name }}</span>
-                        <a href="{% url 'download' file.id %}" class="text-blue-600 hover:text-blue-500">Download</a>
+                        <span class="text-gray-700">{{ file.file.name|basename }}</span>
+                        <div class="flex space-x-4">
+                            <a href="{{ file.file.url }}" class="text-blue-600 hover:text-blue-500" download>Download</a>
+                            <button onclick="shareFile('{{ file.file.url }}')" class="text-green-600 hover:text-green-500">Share</button>
+                        </div>
                     </li>
                 {% empty %}
                     <li class="text-gray-500">No files uploaded yet.</li>
@@ -18,5 +22,18 @@
             </ul>
         </div>
     </main>
-{% endblock content %}
 
+    <script>
+        function shareFile(fileUrl) {
+            if (navigator.share) {
+                navigator.share({
+                    title: "File Share",
+                    text: "Here is a file for you!",
+                    url: fileUrl
+                }).catch(error => console.log('Error sharing:', error));
+            } else {
+                prompt("Copy this link to share:", fileUrl);
+            }
+        }
+    </script>
+{% endblock content %}

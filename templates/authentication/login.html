@@ -1,25 +1,71 @@
 {% extends "extras/main.html" %}
 {% load static %}
 {% block content %}
-    <main class="flex justify-center items-center min-h-screen">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-            <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">Login to NovaShare</h1>
-            <form action="{% url 'login' %}" method="post">
-                {% csrf_token %}
-                
-                <div class="mb-4">
-                    <label for="username" class="block text-gray-700">Username (or Email):</label>
-                    <input type="text" id="username" name="username" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+<main class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md relative overflow-hidden">
+        <!-- Outer Wrapper -->
+        <div class="relative w-full h-full overflow-hidden">
+            <!-- Form Wrapper (double width for sliding) -->
+            <div id="formContainer" class="flex w-[200%] transition-transform duration-500 ease-in-out transform translate-x-0">
+                <!-- Login Form -->
+                <div class="w-full flex-shrink-0 px-6">
+                    <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">Login to NovaShare</h1>
+                    <form action="{% url 'login' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label for="username" class="block text-gray-700">Username (or Email):</label>
+                            <input type="text" id="username" name="username" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="password" class="block text-gray-700">Password:</label>
+                            <input type="password" id="password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">Login</button>
+                    </form>
+                    <p class="text-center text-gray-600 mt-4">Don't have an account? 
+                        <button id="showRegister" class="text-blue-500 font-semibold hover:underline">Register</button>
+                    </p>
                 </div>
 
-                <div class="mb-6">
-                    <label for="password" class="block text-gray-700">Password:</label>
-                    <input type="password" id="password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <!-- Register Form -->
+                <div class="w-full flex-shrink-0 px-6">
+                    <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">Create an Account</h1>
+                    <form action="{% url "sign_up" %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700">Email:</label>
+                            {{form.email}}
+                        </div>
+                        <div class="mb-4">
+                            <label for="reg_username" class="block text-gray-700">Username:</label>
+                            {{form.username}}
+                        </div>
+                        <div class="mb-6">
+                            <label for="reg_password" class="block text-gray-700">Password:</label>
+                            {{form.password}}
+                        </div>
+                        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-500">Register</button>
+                    </form>
+                    <p class="text-center text-gray-600 mt-4">Already have an account? 
+                        <button id="showLogin" class="text-green-500 font-semibold hover:underline">Login</button>
+                    </p>
                 </div>
-
-                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">Login</button>
-            </form>
+            </div>
         </div>
-    </main>
-{% endblock content %}
+    </div>
+</main>
 
+<script>
+    const formContainer = document.getElementById('formContainer');
+    const showRegister = document.getElementById('showRegister');
+    const showLogin = document.getElementById('showLogin');
+
+    showRegister.addEventListener('click', () => {
+        formContainer.style.transform = "translateX(-100%)"; // Move full width left
+    });
+
+    showLogin.addEventListener('click', () => {
+        formContainer.style.transform = "translateX(0%)"; // Move back to login
+    });
+</script>
+{% endblock content %}
