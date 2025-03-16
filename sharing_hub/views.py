@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from sharing_hub.models import Share
 
@@ -23,3 +23,7 @@ def upload(request):
 def dashboard(request):
     uploads = Share.objects.filter(user=request.user)
     return render(request, "sharing_hub/dashboard.html", {"uploads": uploads})
+
+def delete_item(request,slug):
+    Share.objects.filter(slug=slug).delete()
+    return redirect('dashboard')

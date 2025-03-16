@@ -7,13 +7,14 @@
             <h1 class="text-3xl font-semibold text-gray-800 mb-6">Welcome to Your Dashboard</h1>
 
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Your Uploaded Files:</h2>
-            <ul class="space-y-4">
+            <ul class="space-y-4" id="fileList">
                 {% for file in uploads %}
-                    <li class="flex justify-between items-center border-b py-2">
+                    <li id="file-{{ file.id }}" class="flex justify-between items-center border-b py-2">
                         <span class="text-gray-700">{{ file.file.name|basename }}</span>
                         <div class="flex space-x-4">
                             <a href="{{ file.file.url }}" class="text-blue-600 hover:text-blue-500" download>Download</a>
-                            <button onclick="shareFile('{{ file.file.url }}')" class="text-green-600 hover:text-green-500">Share</button>
+                            <a href="#" class="text-green-600 hover:text-green-500">Share</a>
+                            <a href="{% url 'delete_item' file.slug %}" class="text-red-600 hover:text-red-500">Delete</a>
                         </div>
                     </li>
                 {% empty %}
@@ -22,18 +23,4 @@
             </ul>
         </div>
     </main>
-
-    <script>
-        function shareFile(fileUrl) {
-            if (navigator.share) {
-                navigator.share({
-                    title: "File Share",
-                    text: "Here is a file for you!",
-                    url: fileUrl
-                }).catch(error => console.log('Error sharing:', error));
-            } else {
-                prompt("Copy this link to share:", fileUrl);
-            }
-        }
-    </script>
 {% endblock content %}
