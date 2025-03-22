@@ -10,10 +10,16 @@
             <ul class="space-y-4" id="fileList">
                 {% for file in uploads %}
                     <li id="file-{{ file.id }}" class="flex justify-between items-center border-b py-2">
-                        <span class="text-gray-700">{{ file.file.name|basename }}</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" class="file-checkbox" data-file-url="{{file.slug}}">
+                            <span class="text-gray-700">{{ file.file.name|basename }}</span>
+                        </div>
                         <div class="flex space-x-4">
                             <a href="{{ file.file.url }}" class="text-blue-600 hover:text-blue-500" download>Download</a>
-                            <a href="#" class="text-green-600 hover:text-green-500">Share</a>
+                            <button class="text-green-600 hover:text-green-500 single-share-btn"
+                                    data-file-url="{{file.slug}}">
+                                Share
+                            </button>
                             <a href="{% url 'delete_item' file.slug %}" class="text-red-600 hover:text-red-500">Delete</a>
                         </div>
                     </li>
@@ -21,6 +27,31 @@
                     <li class="text-gray-500">No files uploaded yet.</li>
                 {% endfor %}
             </ul>
+            
+            <button id="multiShareBtn" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500 hidden">
+                Share Selected
+            </button>
         </div>
     </main>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 class="text-xl font-semibold mb-4">Share Files</h2>
+            <p class="text-gray-700 mb-2">Copy the links below to share:</p>
+            <div id="shareLinksContainer" class="space-y-2"></div>
+
+            <div class="flex items-center mt-4">
+                <input type="checkbox" id="restrictedAccess" class="mr-2">
+                <label for="restrictedAccess" class="text-gray-700">Allow only authorized users</label>
+            </div>
+
+            <div class="flex justify-end mt-4 space-x-2">
+                <button id="copyAllBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">Copy</button>
+                <button id="closeModal" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-500">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/share.js' %}"></script>
 {% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "extras/main.html" %}
+{% load static %}
+{% load custom_filters %}
+{% block content %}
+
+<main class="flex justify-center items-center min-h-screen px-4">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-6">Shared Files</h1>
+
+        {% if shared_files %}
+            <ul class="space-y-4">
+                {% for file in shared_files %}
+                    <li class="flex justify-between items-center border-b py-2">
+                        <div>
+                            <p class="text-gray-700 font-semibold">{{ file.file.name|basename }}</p>
+                            <p class="text-sm text-gray-500">Uploaded by: {{ file.user.first_name }}</p>
+                            <p class="text-sm text-gray-500">Shared on: {{ file.created_at|date:"M d, Y" }}</p>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="{{ file.file.url }}" class="text-blue-600 hover:text-blue-500" download>Download</a>
+                            <a href="{{ file.file.url }}" target="_blank" class="text-green-600 hover:text-green-500">Preview</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-500 text-center">No shared files available.</p>
+        {% endif %}
+    </div>
+</main>
+
+{% endblock content %}

@@ -5,7 +5,7 @@ from authentication.models import User
 from sharing_hub.file_handler import encrypt_file, decrypt_file
 from django.core.files.base import ContentFile
 import os
-class Share(models.Model):
+class Upload(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, default=None, null=True, blank=True
     )
